@@ -11,4 +11,10 @@ RUN apk add --virtual .build-deps git build-base automake autoconf libtool maria
   && apk del .build-deps \
   && apk add bash mariadb-client-libs
 
-CMD ["sysbench"]
+COPY entrypoint.sh /
+
+RUN chmod 777 /entrypoint.sh
+
+ENTRYPOINT [ "/entrypoint.sh" ]
+
+
