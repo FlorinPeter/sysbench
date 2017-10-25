@@ -10,6 +10,7 @@ RUN apk --update --no-cache add \
 	libtool \
 	autoconf \
 	make \
+	vim \
 	&& git clone https://github.com/akopytov/sysbench.git \
 	&& cd /sysbench && ./autogen.sh && ./configure && make && make install
 
