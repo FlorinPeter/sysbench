@@ -1,15 +1,17 @@
 FROM alpine:3.4
 MAINTAINER Tobias Jakobsson <jakobsson.tobias@gmail.com>
 
-RUN apk add --virtual .build-deps git build-base automake autoconf libtool mariadb-dev vim gcc --update \
-  && git clone https://github.com/akopytov/sysbench.git \
-  && cd sysbench \
-  && ./autogen.sh \
-  && ./configure --disable-shared \
-  && make \
-  && make install \
-  && apk del .build-deps \
-  && apk add bash mariadb-client-libs
+RUN apk --update --no-cache add \
+	g++ \
+	git \
+	mariadb-dev \
+	bash \
+	automake \
+	libtool \
+	autoconf \
+	make \
+	&& git clone https://github.com/akopytov/sysbench.git \
+	&& cd /sysbench && ./autogen.sh && ./configure && make && make install
 
 COPY entrypoint.sh /
 
