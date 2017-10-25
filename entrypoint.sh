@@ -9,6 +9,11 @@ set -e
 cd /disk/
 sysbench --test=fileio --file-total-size=$FILE_TOTAL_SIZE --file-num=$FILE_NUM prepare
 
-for each in 1 4 8 16 32 64; do sysbench --test=fileio --file-total-size=$FILE_TOTAL_SIZE --file-test-mode=rndwr --max-time=240 --max-requests=0 --file-block-size=4K --file-num=64 --num-threads=$each run; sleep 10; done; 
-for each in 1 4 8 16 32 64; do sysbench --test=fileio --file-total-size=$FILE_TOTAL_SIZE --file-test-mode=rndwr --max-time=240 --max-requests=0 --file-block-size=4K --file-num=64 --file-fsync-all --num-threads=$each run; sleep 10; done; 
-for each in 1 4 8 16 32 64; do sysbench --test=fileio --file-total-size=$FILE_TOTAL_SIZE --file-test-mode=rndrd --max-time=240 --max-requests=0 --file-block-size=4K --file-num=64 --num-threads=$each run; sleep 10; done
+echo "RUN1"
+for each in 1 4 8 16 32 64; do echo "Threads $each"; sysbench --test=fileio --file-total-size=$FILE_TOTAL_SIZE --file-test-mode=rndwr --max-time=60 --max-requests=0 --file-block-size=4K --file-num=64 --num-threads=$each run; sleep 10; done; 
+
+echo "RUN2"
+for each in 1 4 8 16 32 64; do echo "Threads $each"; sysbench --test=fileio --file-total-size=$FILE_TOTAL_SIZE --file-test-mode=rndwr --max-time=60 --max-requests=0 --file-block-size=4K --file-num=64 --file-fsync-all --num-threads=$each run; sleep 10; done; 
+
+echo "RUN3"
+for each in 1 4 8 16 32 64; do echo "Threads $each"; sysbench --test=fileio --file-total-size=$FILE_TOTAL_SIZE --file-test-mode=rndrd --max-time=60 --max-requests=0 --file-block-size=4K --file-num=64 --num-threads=$each run; sleep 10; done
